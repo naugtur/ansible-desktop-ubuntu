@@ -1,7 +1,34 @@
 ---
 
-- name: Node.js | Add repository for package
-  apt_repository: repo='ppa:chris-lea/node.js' state=present update_cache=yes
+- name: Add nodesource keys
+  apt_key:
+    url="https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+    state=present
 
-- name: Node.js | Install package
-  apt: pkg=nodejs state=present
+- name: Add nodesource apt sources list deb
+  apt_repository:
+    repo="deb https://deb.nodesource.com/node_4.x {{ ansible_distribution_release }} main"
+    state=present
+
+- name: Add nodesource apt sources list deb src
+  apt_repository:
+    repo="deb-src https://deb.nodesource.com/node_4.x {{ ansible_distribution_release }} main"
+    state=present
+
+- name: Install nodejs
+  apt: pkg=nodejs state=latest update_cache=true
+
+
+- name: jump to latest npm
+  npm:
+    name=npm
+    version=latest
+    global=yes
+    state=present
+
+- name: jump to latest npm
+  npm:
+    name=n
+    version=latest
+    global=yes
+    state=present

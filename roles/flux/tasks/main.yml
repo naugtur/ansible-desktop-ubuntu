@@ -1,0 +1,10 @@
+
+---
+- name: add f.lux ppa
+  apt_repository:
+    repo: 'ppa:nathan-renniewaldock/flux'
+
+- name: install f.lux
+  apt:
+    name: fluxgui
+    state: present

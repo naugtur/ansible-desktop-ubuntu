@@ -5,26 +5,15 @@
 ---
 
 - hosts: local
-  user: lesmyrmidons
-  sudo: yes
+  user: naugtur
+  become: true #new syntax for sudo
 
   vars_files:
     - group_vars/all.yml
 
   roles:
     - common       # List of essential packages
-    - vim          # Configuration for vim
-    - pinta        # Gimp little
-    - latex        # Latex and ide texmaker
-#    - nvidia       # Drivers owner
-    - adst         # Application for series https://github.com/lesmyrmidons/AdstSF2
-#    - hhvm         # Fork PHP
-    - web
-    - mongodb
-    - composer
     - nodejs
-    - dotfile      # My dotfile (config : git, zsh, bash, tig, ...)
-    - conky
-    - gnome-shell  # Extension and custom template
-    - synapse      # Launcher apps.
-#    - gnome-boxes  # Virtual machine
+    - atom
+    - flux
+    
