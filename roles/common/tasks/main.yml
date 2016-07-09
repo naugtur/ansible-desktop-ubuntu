@@ -29,6 +29,7 @@
     - byobu
     #programs
     - firefox
+    - links2
     - vlc
     - gimp
     - audacity

@@ -1,0 +1,8 @@
+---
+- name: Add canonical partner list deb
+  apt_repository:
+    repo="deb http://archive.canonical.com/ {{ ansible_distribution_release }} partner"
+    state=present
+
+- name: Install skype
+  apt: pkg=skype state=latest
