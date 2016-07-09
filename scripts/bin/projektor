@@ -1,0 +1,65 @@
+#!/bin/bash
+
+LAYOUT=" --same_as LVDS1"
+
+case "$1" in
+    "hd" | "mirrorhd")
+        MIRRORHD=1
+        ;;
+    "s" | "same")
+        ;;
+    "a" | "above")
+        LAYOUT=" --above LVDS1"
+        ;;
+    "b" | "below")
+        LAYOUT=" --below LVDS1"
+        ;;
+    *)
+        cat << EOF
+        usage: projektor [layout]
+        "s" | "same"
+        "a" | "above"
+        "b" | "below"
+        "hd" | "mirrorhd"
+        EOF
+        exit 1
+        ;;
+esac
+
+xrandr --output LVDS1 --auto
+xrandr --auto
+
+
+VG=`xrandr | grep VGA1 | grep disconnected | wc -l`
+
+if [ $VG -eq 0 ];
+then
+    #VGA ON
+    if [ $MIRRORHD -eq 1 ];
+    then
+        xrandr --output LVDS1 --mode 1920x1080 --fb 1920x1080 --panning 1920x1080* --output VGA1 --mode 1920x1080 --same-as LVDS1
+    else
+        xrandr --output VGA1 --mode 1280x960 $LAYOUT
+    fi
+
+else
+    HD=`xrandr | grep HDMI1 | grep disconnected | wc -l`
+
+    if [ $HD -eq 0 ];
+    then
+        #HDMI ON
+        if [ $MIRRORHD -eq 1 ];
+        then
+            xrandr --output LVDS1 --mode 1920x1080 --fb 1920x1080 --panning 1920x1080* --output HDMI1 --mode 1920x1080 --same-as LVDS1
+        else
+            xrandr --output HDMI1 --mode 1280x720 $LAYOUT
+        fi
+        pactl set-card-profile 0 output:hdmi-stereo
+    else
+        #ALL OFF
+        xrandr --output LVDS1 --scale 1x1
+        xrandr --auto
+        pactl set-card-profile 0 output:analog-stereo
+    fi
+
+fi

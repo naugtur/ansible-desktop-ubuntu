@@ -1,0 +1,5 @@
+#!/bin/bash
+SIZE=`grep 'FontName' ~/.config/xfce4/terminal/terminalrc | cut -d' ' -f 3`
+NEWSIZE=$((SIZE - 2))
+REGEXPR='s/FontName.*/FontName=Liberation Mono '$NEWSIZE'/g'
+sed -i "$REGEXPR" ~/.config/xfce4/terminal/terminalrc

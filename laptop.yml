@@ -12,10 +12,6 @@
     - group_vars/all.yml
 
   roles:
-    - common       # List of essential packages
-    - nodejs
-    - atom
-    - flux
-    - skype
-    - openshot
-    - theme
+    - packages       # List of essential packages
+    - ppas
+    - configs

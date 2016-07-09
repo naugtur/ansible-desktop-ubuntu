@@ -1,0 +1,9 @@
+---
+
+- name: Copy bin scripts to homedir
+  become: no
+  copy:
+    src: '{{ playbook_dir }}/scripts/bin'
+    dest: ~/
+  tags:
+    - binscripts

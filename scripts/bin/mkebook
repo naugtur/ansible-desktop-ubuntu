@@ -1,0 +1,8 @@
+#!/bin/bash
+
+
+
+#ebook-convert $1 $1.mobi --output-profile kindle --asciiize --no-images
+
+#pdf to mobi defaults
+ebook-convert "$1" "$1.mobi" --output-profile kindle --no-images
