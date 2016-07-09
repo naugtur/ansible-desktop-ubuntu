@@ -3,6 +3,7 @@
 - name: add f.lux ppa
   apt_repository:
     repo: 'ppa:nathan-renniewaldock/flux'
+    mode: '0644'
 
 - name: install f.lux
   apt:

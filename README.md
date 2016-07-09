@@ -19,3 +19,8 @@ Try this if ansible fails to install:
     sudo apt-get -y install libssl-dev
 
 ```
+
+
+## Known issues
+
+-  file mode must be a string https://github.com/ansible/ansible-modules-core/issues/4064

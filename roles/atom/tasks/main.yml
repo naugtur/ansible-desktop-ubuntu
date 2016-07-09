@@ -2,6 +2,7 @@
 - name: add atom ppa
   apt_repository:
     repo: 'ppa:webupd8team/atom'
+    mode: '0644'
 
 - name: install atom
   apt:
