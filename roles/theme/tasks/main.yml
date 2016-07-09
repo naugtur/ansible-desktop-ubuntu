@@ -1,0 +1,11 @@
+---
+- name: Checkout theme
+  git:
+    repo: https://github.com/Deevad/Darkcompact_xfwm4-theme.git
+    dest: /tmp/Darkcompact_xfwm4-theme
+    update: no
+
+- name: Copy theme to share
+  copy:
+    src: /tmp/Darkcompact_xfwm4-theme/
+    dest: /usr/share/themes/Darkcompact_xfwm4-theme/

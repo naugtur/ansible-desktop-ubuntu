@@ -1,0 +1,11 @@
+
+---
+- name: add openshot ppa
+  apt_repository:
+    repo: 'ppa:openshot.developers/ppa'
+    mode: '0644'
+
+- name: install openshot
+  apt:
+    name: openshot
+    state: present
