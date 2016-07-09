@@ -26,7 +26,7 @@
     global=yes
     state=present
 
-- name: jump to latest npm
+- name: install n
   npm:
     name=n
     version=latest
