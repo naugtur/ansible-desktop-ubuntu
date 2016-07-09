@@ -15,14 +15,14 @@ case "$1" in
         LAYOUT=" --below LVDS1"
         ;;
     *)
-        cat << EOF
-        usage: projektor [layout]
-        "s" | "same"
-        "a" | "above"
-        "b" | "below"
-        "hd" | "mirrorhd"
-        EOF
-        exit 1
+        cat <<EOF
+usage: projektor [layout]
+layouts:
+    "s" | "same" (default)
+    "a" | "above"
+    "b" | "below"
+    "hd" | "mirrorhd"
+EOF
         ;;
 esac
 
