@@ -1,8 +1,20 @@
 #!/bin/bash
 
-LAYOUT=" --same_as LVDS1"
+LAYOUT=" --same-as LVDS1"
+MIRRORHD=0
+LAPTOPSCREEN="1366x768"
+
+function turnitoff {
+    xrandr --output LVDS1 --scale 1x1 --fb $LAPTOPSCREEN --panning $LAPTOPSCREEN
+    xrandr --auto
+    pactl set-card-profile 0 output:analog-stereo
+}
+
 
 case "$1" in
+    "off")
+        turnitoff
+        ;;
     "hd" | "mirrorhd")
         MIRRORHD=1
         ;;
@@ -18,6 +30,7 @@ case "$1" in
         cat <<EOF
 usage: projektor [layout]
 layouts:
+    "off"
     "s" | "same" (default)
     "a" | "above"
     "b" | "below"
@@ -37,7 +50,7 @@ then
     #VGA ON
     if [ $MIRRORHD -eq 1 ];
     then
-        xrandr --output LVDS1 --mode 1920x1080 --fb 1920x1080 --panning 1920x1080* --output VGA1 --mode 1920x1080 --same-as LVDS1
+        xrandr --output LVDS1  --scale 1.4x1.4 --fb 1920x1080 --panning 1920x1080* --output VGA1 --mode 1920x1080 --same-as LVDS1
     else
         xrandr --output VGA1 --mode 1280x960 $LAYOUT
     fi
@@ -50,16 +63,14 @@ else
         #HDMI ON
         if [ $MIRRORHD -eq 1 ];
         then
-            xrandr --output LVDS1 --mode 1920x1080 --fb 1920x1080 --panning 1920x1080* --output HDMI1 --mode 1920x1080 --same-as LVDS1
+            xrandr --output LVDS1 --mode $LAPTOPSCREEN --scale 1.4x1.4 --fb 1920x1080 --panning 1920x1080* --output HDMI1 --mode 1920x1080 --same-as LVDS1
         else
             xrandr --output HDMI1 --mode 1280x720 $LAYOUT
         fi
         pactl set-card-profile 0 output:hdmi-stereo
     else
         #ALL OFF
-        xrandr --output LVDS1 --scale 1x1
-        xrandr --auto
-        pactl set-card-profile 0 output:analog-stereo
+        turnitoff
     fi
 
 fi
