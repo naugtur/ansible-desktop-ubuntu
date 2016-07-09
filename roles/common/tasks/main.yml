@@ -41,6 +41,7 @@
     - mongodb
     - chromium-browser
     - inkscape
+    - calibre
 
 # - name: Package | Remove unwanted
 #   apt: pkg={{ item }} state=absent
