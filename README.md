@@ -20,7 +20,14 @@ Try this if ansible fails to install:
 
 ```
 
+## Remember to noatime for SSD
+/etc/fstab - add noatime to all SSDs
 
 ## Known issues
 
 -  file mode must be a string https://github.com/ansible/ansible-modules-core/issues/4064
+
+
+## TODO
+
+- Add "no internet" app runner http://ubuntuforums.org/showthread.php?t=1188099&s=73e8a8809da60f5e49641129388c7658

@@ -1,11 +1,18 @@
 ---
+
+- name: Check if template present
+  stat: path=/usr/share/themes/Darkcompact_xfwm4-theme
+  register: themefolder
+
 - name: Checkout theme
+  when: themefolder.stat.exists == False
   git:
     repo: https://github.com/Deevad/Darkcompact_xfwm4-theme.git
     dest: /tmp/Darkcompact_xfwm4-theme
     update: no
 
 - name: Copy theme to share
+  when: themefolder.stat.exists == False
   copy:
     src: /tmp/Darkcompact_xfwm4-theme/
     dest: /usr/share/themes/Darkcompact_xfwm4-theme/

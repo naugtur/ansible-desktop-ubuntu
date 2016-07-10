@@ -13,3 +13,11 @@
   apt:
     pkg: suckless-tools
     state: installed
+
+- name: Check SSD trim cron
+  stat: path=/etc/cron.weekly/fstrim
+  register: cronweekly
+
+- name: Trim SSD daily
+  command: creates="/etc/cron.daily/fstrim" mv /etc/cron.weekly/fstrim /etc/cron.daily/fstrim
+  when: cronweekly.stat.exists

@@ -1,5 +1,5 @@
 ---
-- name: add openshot ppa
+- name: add asciinema ppa
   apt_repository:
     repo: 'ppa:zanchey/asciinema'
     mode: '0644'
