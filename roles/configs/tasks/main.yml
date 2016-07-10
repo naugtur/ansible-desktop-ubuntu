@@ -1,3 +1,15 @@
 ---
 - include: theme.yml
 - include: binscripts.yml
+
+- name: Remove screen locker
+  apt: pkg={{ item }} state=absent
+  with_items:
+    - light-locker
+    - light-locker-settings
+    - xscreensaver
+
+- name: Install replacement screen locker
+  apt:
+    pkg: suckless-tools
+    state: installed
