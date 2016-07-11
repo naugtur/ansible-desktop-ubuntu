@@ -1,0 +1,17 @@
+---
+- name: Add google keys
+  apt_key:
+    url: 'https://dl-ssl.google.com/linux/linux_signing_key.pub'
+    state: present
+
+- name: Add google apt sources list deb
+  apt_repository:
+    repo: 'deb http://dl.google.com/linux/chrome/deb/ stable main'
+    state: present
+    mode: '0644'
+
+- name: Install google-chrome-beta
+  apt:
+    pkg: google-chrome-beta
+    state: latest
+    update_cache: true
