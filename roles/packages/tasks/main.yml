@@ -27,6 +27,7 @@
     - bzip2
     - byobu
     - build-essential
+    - nmap
 
 - name: Package | Install programs
   apt: pkg={{ item }} state=installed

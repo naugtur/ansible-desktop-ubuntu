@@ -8,3 +8,9 @@
   apt:
     name: atom
     state: present
+
+- name: atom plugins
+  become: no
+  command: "apm install atom-beautify markdown-preview atom-mermaid language-javascript emmet line-diff-details git-blame standard-formatter relative-require"
+  tags:
+    - atomplugins
