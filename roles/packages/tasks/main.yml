@@ -26,6 +26,7 @@
     - gzip
     - bzip2
     - byobu
+    - baobab
     - build-essential
     - nmap
 

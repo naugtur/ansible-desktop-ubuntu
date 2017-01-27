@@ -11,6 +11,6 @@
 
 - name: atom plugins
   become: no
-  command: "apm install atom-beautify markdown-preview atom-mermaid language-javascript emmet line-diff-details git-blame standard-formatter relative-require"
+  command: "apm install tab-control atom-beautify markdown-preview atom-mermaid language-javascript emmet line-diff-details git-blame standard-formatter relative-require"
   tags:
     - atomplugins
