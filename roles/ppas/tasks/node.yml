@@ -14,7 +14,7 @@
 
 - name: Add nodesource apt sources list deb src
   apt_repository:
-    repo: 'deb-src https://deb.nodesource.com/node_4.x {{ ansible_distribution_release }} main'
+    repo: 'deb-src https://deb.nodesource.com/node_6.x {{ ansible_distribution_release }} main'
     state: present
     mode: '0644'
 

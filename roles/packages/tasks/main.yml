@@ -6,6 +6,12 @@
 - name: Linux | Upgrade
   apt: upgrade=dist
 
+- name: Package | Add apt https
+  apt: pkg={{ item }} state=installed
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+
 - name: Package | Install sys/console tools
   apt: pkg={{ item }} state=installed
   with_items:
