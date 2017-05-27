@@ -1,14 +1,17 @@
 ---
 - name: get docker key
-  shell: "curl -fsSL https://yum.dockerproject.org/gpg | apt-key add -"
+  shell: "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -"
+  become: true
 
 - name: check docker key fingerprint
-  command: "apt-key fingerprint 58118E89F3A912897C070ADBF76221572C52609D"
+  command: "apt-key fingerprint 0EBFCD88"
+  become: true
 
 - name: add repo matching distro
-  shell: "add-apt-repository \"deb https://apt.dockerproject.org/repo/ ubuntu-$(lsb_release -cs) main\""
+  shell: "add-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable\""
 
-- name: install docker-engine
+- name: install docker-ce
   apt:
-    name: docker-engine
+    name: docker-ce
     state: present
+    update_cache: true

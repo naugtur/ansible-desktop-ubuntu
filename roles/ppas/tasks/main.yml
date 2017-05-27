@@ -3,6 +3,8 @@
 - include: atom.yml
 - include: docker.yml
   tags: docker
+- include: git-secret.yml
+  tags: git-secret
 - include: flux.yml
 - include: node.yml
 - include: openshot.yml

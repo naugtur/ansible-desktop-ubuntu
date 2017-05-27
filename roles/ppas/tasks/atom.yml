@@ -8,9 +8,10 @@
   apt:
     name: atom
     state: present
+    update_cache: true
 
 - name: atom plugins
   become: no
-  command: "apm install tab-control atom-beautify markdown-preview atom-mermaid language-javascript emmet line-diff-details git-blame standard-formatter relative-require"
+  command: "apm install open-in-browser merge-conflicts tab-control atom-beautify markdown-preview atom-mermaid language-javascript emmet line-diff-details git-blame standard-formatter relative-require"
   tags:
     - atomplugins
