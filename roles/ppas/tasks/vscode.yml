@@ -1,0 +1,19 @@
+---
+
+- name: Add msft keys
+  apt_key:
+    url: 'https://packages.microsoft.com/keys/microsoft.asc'
+    state: present
+
+- name: Add msft apt sources list deb
+  apt_repository:
+    repo: 'deb https://packages.microsoft.com/repos/vscode stable main'
+    state: present
+    mode: '0644'
+
+- name: Install code
+  apt:
+    pkg: code
+    state: latest
+    update_cache: true
+

@@ -1,6 +1,5 @@
 ---
 - include: asciinema.yml
-- include: atom.yml
 - include: docker.yml
   tags: docker
 - include: git-secret.yml
@@ -8,5 +7,5 @@
 - include: flux.yml
 - include: node.yml
 - include: openshot.yml
-- include: skype.yml
+- include: vscode.yml
 - include: googlechrome.yml

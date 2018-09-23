@@ -21,7 +21,10 @@ Try this if ansible fails to install:
 ```
 
 ## Remember to noatime for SSD
-/etc/fstab - add noatime to all SSDs
+/etc/fstab - add `noatime,` to all SSDs options column
+
+remove swap configuration if any
+
 
 ## Known issues
 

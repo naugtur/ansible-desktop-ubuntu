@@ -7,7 +7,8 @@
 - hosts: local
   user: naugtur
   become: true #new syntax for sudo
-
+  vars:
+    user: naugtur
   vars_files:
     - group_vars/all.yml
 

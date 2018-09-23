@@ -15,3 +15,12 @@
     name: docker-ce
     state: present
     update_cache: true
+
+- name: install docker-compose
+  apt:
+    name: docker-compose
+    state: present
+
+- name: enable nosudo usage
+  shell: "usermod -aG docker {{ user }}"
+  become: true

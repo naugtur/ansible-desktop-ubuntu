@@ -7,13 +7,13 @@
   apt: upgrade=dist
 
 - name: Package | Add apt https
-  apt: pkg={{ item }} state=installed
+  apt: pkg={{ item }} state=present
   with_items:
     - apt-transport-https
     - ca-certificates
 
 - name: Package | Install sys/console tools
-  apt: pkg={{ item }} state=installed
+  apt: pkg={{ item }} state=present
   with_items:
     - aptitude
     - bash-completion
@@ -37,9 +37,8 @@
     - nmap
 
 - name: Package | Install programs
-  apt: pkg={{ item }} state=installed
+  apt: pkg={{ item }} state=present
   with_items:
-    - firefox
     - links2
     - vlc
     - gimp
@@ -50,6 +49,7 @@
     - chromium-browser
     - inkscape
     - calibre
+    - nodejs
 
 # - name: Package | Remove unwanted
 #   apt: pkg={{ item }} state=absent
