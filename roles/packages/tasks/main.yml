@@ -39,13 +39,12 @@
 - name: Package | Install programs
   apt: pkg={{ item }} state=present
   with_items:
+    - testdisk #awesome recovery tool 
     - links2
     - vlc
     - gimp
     - easytag
     - audacity
-    - redis-server
-    - mongodb
     - chromium-browser
     - inkscape
     - calibre

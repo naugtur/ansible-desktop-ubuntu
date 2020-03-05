@@ -21,7 +21,7 @@
   become: true
 
 - name: good node
-  shell: "n 10.10.0"
+  shell: "n 12"
   become: true
 
 
