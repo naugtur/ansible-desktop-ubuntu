@@ -1,18 +1,19 @@
 ---
 - include: theme.yml
-  #- include: binscripts.yml
+- include: binscripts.yml
+- include: shortcuts.yml
 
-- name: Remove screen locker
-  apt: pkg={{ item }} state=absent
-  with_items:
-    - light-locker
-    - light-locker-settings
-    - xscreensaver
+# - name: Remove screen locker
+#   apt: pkg={{ item }} state=absent
+#   with_items:
+#     - light-locker
+#     - light-locker-settings
+#     - xscreensaver
 
-- name: Install replacement screen locker
-  apt:
-    pkg: suckless-tools
-    state: installed
+# - name: Install replacement screen locker
+#   apt:
+#     pkg: suckless-tools
+#     state: installed
 
 - name: Check SSD trim cron
   stat: path=/etc/cron.weekly/fstrim

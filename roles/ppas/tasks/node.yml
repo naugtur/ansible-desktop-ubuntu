@@ -12,16 +12,5 @@
     state: latest
   become: true
 
-- name: install n
-  npm:
-    name: n
-    version: latest
-    global: yes
-    state: present
-  become: true
-
-- name: good node
-  shell: "n 12"
-  become: true
 
 

@@ -1,2 +1,0 @@
-xrandr --output LVDS1 --mode 1366x768 --scale 1.17x1.17
-xrandr --output LVDS1 --mode 1366x768 --panning 1600x899 --scale 1.17x1.17

@@ -4,7 +4,7 @@
   tags: docker
 - include: git-secret.yml
   tags: git-secret
-- include: flux.yml
+# - include: flux.yml
 - include: node.yml
 - include: openshot.yml
 - include: vscode.yml
