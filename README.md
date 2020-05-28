@@ -7,9 +7,9 @@ Check out were I forked it from before I changed everything :).
 Requires ansible.
 
 ```
-sudo apt-get install -y -qq python python-pip git git-core openssh-server
+sudo apt-get install -y -qq python3-pip git git-core openssh-server
 
-sudo pip install ansible
+sudo pip3 install ansible
 ```
 
 Try this if ansible fails to install:

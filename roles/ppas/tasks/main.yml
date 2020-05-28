@@ -1,5 +1,5 @@
 ---
-- include: asciinema.yml
+# - include: asciinema.yml
 - include: docker.yml
   tags: docker
 - include: git-secret.yml
