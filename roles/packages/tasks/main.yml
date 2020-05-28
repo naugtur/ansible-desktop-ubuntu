@@ -7,14 +7,14 @@
   apt: upgrade=dist
 
 - name: Package | Add apt https
-  apt: pkg={{ item }} state=present
-  with_items:
-    - apt-transport-https
-    - ca-certificates
+  apt: 
+    pkg:
+      - apt-transport-https
+      - ca-certificates
 
 - name: Package | Install sys/console tools
-  apt: pkg={{ item }} state=present
-  with_items:
+  apt: 
+    pkg:
     - aptitude
     - bash-completion
     - openssh-server
@@ -35,26 +35,20 @@
     - baobab
     - build-essential
     - nmap
+  
 
 - name: Package | Install programs
-  apt: pkg={{ item }} state=present
-  with_items:
-    - testdisk #awesome recovery tool 
-    - links2
-    - vlc
-    - gimp
-    - easytag
-    - audacity
-    - chromium-browser
-    - inkscape
-    - calibre
-    - nodejs
+  apt: 
+    pkg:
+      - testdisk #awesome recovery tool 
+      - links2
+      - vlc
+      - gimp
+      - easytag
+      - audacity
+      - chromium-browser
+      - inkscape
+      - calibre
+      - nodejs
 
-# - name: Package | Remove unwanted
-#   apt: pkg={{ item }} state=absent
-#   with_items:
 
-# doesn't seem to work with current ansible
-# - name: Package | autoremove
-#   apt:
-#     autoremove: yes

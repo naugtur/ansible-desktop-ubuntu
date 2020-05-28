@@ -1,15 +1,15 @@
 - name: Install xfconf
   apt:
     pkg: xfconf
-    state: installed
+    state: present
 
 
 - name: add dropdown terminal
-  become: {{ user }}
+  become: "{{ user }}"
   shell: "xfconf-query --create --channel xfce4-keyboard-shortcuts --property '/commands/custom/<Primary>grave' --type string --set 'xfce4-terminal --drop-down'"
 
 - name: add tiling
-  become: {{ user }}
+  become: "{{ user }}"
   shell: |
     xfconf-query --create --channel xfce4-keyboard-shortcuts --property '/xfwm4/custom/<Super>x' --type string --set 'tile_right_key'
     xfconf-query --create --channel xfce4-keyboard-shortcuts --property '/xfwm4/custom/<Super>z' --type string --set 'tile_left_key'
