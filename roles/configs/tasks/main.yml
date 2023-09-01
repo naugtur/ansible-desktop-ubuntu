@@ -2,6 +2,7 @@
 - include: theme.yml
 - include: binscripts.yml
 - include: shortcuts.yml
+- include: tweaks.yml
 
 # - name: Remove screen locker
 #   apt: pkg={{ item }} state=absent

@@ -2,10 +2,10 @@
 # - include: asciinema.yml
 - include: docker.yml
   tags: docker
-- include: git-secret.yml
-  tags: git-secret
+  #- include: git-secret.yml
+  #tags: git-secret
 # - include: flux.yml
 - include: node.yml
-- include: openshot.yml
+  #- include: openshot.yml
 - include: vscode.yml
 - include: googlechrome.yml

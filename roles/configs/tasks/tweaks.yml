@@ -1,0 +1,43 @@
+- name: setup folder for node replacements
+  become: true
+  shell: "mkdir -p /usr/local/n && chown -R naugtur /usr/local/n/"
+
+- name: install n node manager
+  become: true
+  shell: "npm i -g n"
+
+- name: add tweaks to .bashrc
+  become_user: "{{ user }}"
+  blockinfile:
+    dest: "~/.bashrc"
+    block: |
+      # thefuck install
+      eval $(thefuck --alias)
+      # history saving
+      export PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
+      # npm global
+      NPM_BIN="$HOME/.npm-packages/bin"
+      export PATH="$PATH:$NPM_BIN"
+      # large history
+      HISTSIZE=100000
+      HISTFILESIZE=200000
+    marker: '# {mark} ANSIBLE MANAGED BLOCK - tweaks'
+    insertbefore: EOF
+    create: false
+
+
+- name: nice prompt in .bashrc
+  become_user: "{{ user }}"
+  blockinfile:
+    dest: "~/.bashrc"
+    block: |
+      # zzzzzzzzzzz
+      if [ "$color_prompt" = yes ]; then
+          PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] \[\e[91m\]\$(__git_ps1 '[%s]')\[\e[00m\]\$ "
+      else
+          PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+      fi
+    marker: '# {mark} ANSIBLE MANAGED BLOCK - prompt'
+    insertbefore: EOF
+    create: false
+
