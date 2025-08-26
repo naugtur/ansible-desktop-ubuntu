@@ -1,5 +1,0 @@
-#!/bin/bash
-
-convert -density 300x300 $1 /tmp/$1.jpg
-lpr /tmp/$1*.jpg
-echo chyba ok

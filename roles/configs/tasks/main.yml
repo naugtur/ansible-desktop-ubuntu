@@ -1,25 +1,15 @@
 ---
-- include: theme.yml
-- include: binscripts.yml
-- include: shortcuts.yml
-- include: tweaks.yml
-
-# - name: Remove screen locker
-#   apt: pkg={{ item }} state=absent
-#   with_items:
-#     - light-locker
-#     - light-locker-settings
-#     - xscreensaver
-
-# - name: Install replacement screen locker
-#   apt:
-#     pkg: suckless-tools
-#     state: installed
+- import_tasks: theme.yml
+- import_tasks: binscripts.yml
+- import_tasks: shortcuts.yml
+- import_tasks: tweaks.yml
 
 - name: Check SSD trim cron
-  stat: path=/etc/cron.weekly/fstrim
+  stat:
+    path: /etc/cron.weekly/fstrim
   register: cronweekly
-
-- name: Trim SSD daily
-  command: creates="/etc/cron.daily/fstrim" mv /etc/cron.weekly/fstrim /etc/cron.daily/fstrim
-  when: cronweekly.stat.exists
+# - name: Trim SSD daily
+#   command:
+#     cmd: mv /etc/cron.weekly/fstrim /etc/cron.daily/fstrim
+#     creates: /etc/cron.daily/fstrim
+#   when: cronweekly.stat.exists

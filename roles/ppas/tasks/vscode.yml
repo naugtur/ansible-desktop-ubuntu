@@ -1,19 +1,39 @@
 ---
-
-- name: Add msft keys
-  apt_key:
-    url: 'https://packages.microsoft.com/keys/microsoft.asc'
-    state: present
-
-- name: Add msft apt sources list deb
-  apt_repository:
-    repo: 'deb https://packages.microsoft.com/repos/vscode stable main'
-    state: present
-    mode: '0644'
-
-- name: Install code
+- name: Install prerequisites for VS Code repository
   apt:
-    pkg: code
-    state: latest
+    name:
+      - ca-certificates
+      - curl
+      - gnupg
+    state: present
     update_cache: true
 
+- name: Create directory for VS Code GPG key
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: "0755"
+
+- name: Download VS Code GPG key
+  get_url:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    dest: /etc/apt/keyrings/microsoft.asc
+    mode: "0644"
+    force: true
+
+- name: Add VS Code repository
+  deb822_repository:
+    name: vscode
+    types: [deb]
+    uris: "https://packages.microsoft.com/repos/vscode"
+    suites: [stable]
+    components: [main]
+    architectures: [amd64, arm64, armhf]
+    signed_by: /etc/apt/keyrings/microsoft.asc
+    state: present
+
+- name: Install Visual Studio Code
+  apt:
+    name: code
+    state: latest
+    update_cache: true

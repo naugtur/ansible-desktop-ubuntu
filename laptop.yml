@@ -1,18 +1,50 @@
+---
 ##
-# Ansible playbook for setting up a LAMP development server on Ubuntu 14.04.
+# Ansible playbook for setting up laptop on Xubuntu
+# Compatible with modern Ansible versions (2.9+)
 #
 
----
-
-- hosts: local
-  user: naugtur
-  become: true #new syntax for sudo
+- name: Configure Xubuntu Desktop Environment
+  hosts: local
+  remote_user: "{{ user }}"
+  become: true
+  gather_facts: true
   vars:
     user: naugtur
+    ansible_python_interpreter: /usr/bin/python3
   vars_files:
     - group_vars/all.yml
 
+  pre_tasks:
+    - name: Verify we're running on Ubuntu/Xubuntu
+      fail:
+        msg: "This playbook is designed for Ubuntu/Xubuntu systems"
+      when: ansible_distribution != "Ubuntu"
+
+    - name: Update apt cache
+      apt:
+        update_cache: true
+        cache_valid_time: 3600
+
   roles:
-    - packages       # List of essential packages
-    - ppas
-    - configs
+    - role: packages
+      tags: packages
+    - role: ppas
+      tags: ppas
+    - role: configs
+      tags: configs
+
+  post_tasks:
+    - name: Autoremove unused packages
+      apt:
+        autoremove: true
+        purge: true
+
+    - name: Clean apt cache
+      apt:
+        autoclean: true
+
+  handlers:
+    - name: Restart systemd daemon
+      systemd:
+        daemon_reload: true

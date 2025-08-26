@@ -1,46 +1,50 @@
 ---
+- name: Update apt cache
+  apt:
+    update_cache: true
+    cache_valid_time: 3600
 
-- name: Linux | Update cache
-  apt: update_cache=yes cache_valid_time=3600
+- name: Upgrade all packages to latest version
+  apt:
+    upgrade: dist
 
-- name: Linux | Upgrade
-  apt: upgrade=dist
-
-- name: Package | Add apt https
-  apt: 
-    pkg:
+- name: Install apt transport packages
+  apt:
+    name:
       - apt-transport-https
       - ca-certificates
+    state: present
 
-- name: Package | Install sys/console tools
-  apt: 
-    pkg:
-    - aptitude
-    - bash-completion
-    - openssh-server
-    - vim
-    - git
-    - git-core
-    - curl
-    - wget
-    - htop
-    - atop
-    - iotop
-    - iftop
-    - unzip
-    - tar
-    - gzip
-    - bzip2
-    - byobu
-    - baobab
-    - build-essential
-    - nmap
-  
+- name: Install system and console tools
+  apt:
+    name:
+      - aptitude
+      - bash-completion
+      - openssh-server
+      - vim
+      - git
+      - git-core
+      - curl
+      - wget
+      - htop
+      - atop
+      - iotop
+      - iftop
+      - unzip
+      - tar
+      - gzip
+      - bzip2
+      - byobu
+      - baobab
+      - build-essential
+      - nmap
+      - xdotool
+    state: present
 
-- name: Package | Install programs
-  apt: 
-    pkg:
-      - testdisk #awesome recovery tool 
+- name: Install desktop applications
+  apt:
+    name:
+      - testdisk # awesome recovery tool
       - links2
       - vlc
       - gimp
@@ -50,6 +54,7 @@
       - inkscape
       - calibre
       - nodejs
-      - thefuck
-
-
+      - recordmydesktop
+      - kdeconnect
+      - gufw
+    state: present

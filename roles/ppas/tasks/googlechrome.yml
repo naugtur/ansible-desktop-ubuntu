@@ -1,17 +1,39 @@
 ---
-- name: Add google keys
-  apt_key:
-    url: 'https://dl-ssl.google.com/linux/linux_signing_key.pub'
-    state: present
-
-- name: Add google apt sources list deb
-  apt_repository:
-    repo: 'deb http://dl.google.com/linux/chrome/deb/ stable main'
-    state: present
-    mode: '0644'
-
-- name: Install google-chrome-beta
+- name: Install prerequisites for Google Chrome repository
   apt:
-    pkg: google-chrome-beta
+    name:
+      - ca-certificates
+      - curl
+      - gnupg
+    state: present
+    update_cache: true
+
+- name: Create directory for Google Chrome GPG key
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: "0755"
+
+- name: Download Google Chrome GPG key
+  get_url:
+    url: https://dl-ssl.google.com/linux/linux_signing_key.pub
+    dest: /etc/apt/keyrings/google-chrome.asc
+    mode: "0644"
+    force: true
+
+- name: Add Google Chrome repository
+  deb822_repository:
+    name: google-chrome
+    types: [deb]
+    uris: "http://dl.google.com/linux/chrome/deb/"
+    suites: [stable]
+    components: [main]
+    architectures: [amd64]
+    signed_by: /etc/apt/keyrings/google-chrome.asc
+    state: present
+
+- name: Install Google Chrome Beta
+  apt:
+    name: google-chrome-beta
     state: latest
     update_cache: true

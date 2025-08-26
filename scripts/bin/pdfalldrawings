@@ -1,0 +1,3 @@
+#!/bin/bash
+pdftohtml *.pdf 
+for a in *.png; do convert -trim -transparent white -negate "$a" "c_$a"; done

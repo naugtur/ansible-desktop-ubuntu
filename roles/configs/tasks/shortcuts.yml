@@ -1,37 +1,25 @@
+---
 - name: Install xfconf
   apt:
-    pkg: xfconf
+    name: xfconf
     state: present
 
-# they don't seem to work :(
+# Note: These keyboard shortcuts may not work reliably due to XFCE limitations
 
-- name: add dropdown terminal
+- name: Add dropdown terminal shortcut
   become: true
   become_user: "{{ user }}"
   shell: "xfconf-query --create --channel xfce4-keyboard-shortcuts --property '/commands/custom/<Primary>grave' --type string --set 'xfce4-terminal --drop-down'"
 
-- name: add tiling
+- name: Configure window tiling shortcuts
   become: true
   become_user: "{{ user }}"
   shell: |
-    xfconf-query --create --channel xfce4-keyboard-shortcuts --property '/xfwm4/custom/<Super>x' --type string --set 'tile_right_key'
-    xfconf-query --create --channel xfce4-keyboard-shortcuts --property '/xfwm4/custom/<Super>z' --type string --set 'tile_left_key'
+    # Right tile with super + right arrow
+    xfconf-query --create --channel xfce4-keyboard-shortcuts --property '/xfwm4/custom/<Super>Right' --type string --set 'tile_right_key'
+    # Left tile with super + left arrow
+    xfconf-query --create --channel xfce4-keyboard-shortcuts --property '/xfwm4/custom/<Super>Left' --type string --set 'tile_left_key'
+    # Maximize horizontal
     xfconf-query --create --channel xfce4-keyboard-shortcuts --property '/xfwm4/custom/<Super>a' --type string --set 'maximize_horiz_key'
+    # Maximize vertical
     xfconf-query --create --channel xfce4-keyboard-shortcuts --property '/xfwm4/custom/<Super>q' --type string --set 'maximize_vert_key'
-    xfconf-query --reset --channel xfce4-keyboard-shortcuts --property '/commands/default/<Super>s'
-    xfconf-query --reset --channel xfce4-keyboard-shortcuts --property '/commands/custom/<Super>s'
-    xfconf-query --reset --channel xfce4-keyboard-shortcuts --property '/xfwm4/custom/<Super>s'
-    xfconf-query --create --channel xfce4-keyboard-shortcuts --property '/xfwm4/custom/<Super>s' --type string --set 'tile_down_left_key'
-    xfconf-query --reset --channel xfce4-keyboard-shortcuts --property '/commands/default/<Super>d'
-    xfconf-query --reset --channel xfce4-keyboard-shortcuts --property '/commands/custom/<Super>d'
-    xfconf-query --reset --channel xfce4-keyboard-shortcuts --property '/xfwm4/custom/<Super>d'
-    xfconf-query --create --channel xfce4-keyboard-shortcuts --property '/xfwm4/custom/<Super>d' --type string --set 'tile_down_right_key'
-    xfconf-query --reset --channel xfce4-keyboard-shortcuts --property '/commands/default/<Super>w'
-    xfconf-query --reset --channel xfce4-keyboard-shortcuts --property '/commands/custom/<Super>w'
-    xfconf-query --reset --channel xfce4-keyboard-shortcuts --property '/xfwm4/custom/<Super>w'
-    xfconf-query --create --channel xfce4-keyboard-shortcuts --property '/xfwm4/custom/<Super>w' --type string --set 'tile_up_left_key'
-    xfconf-query --reset --channel xfce4-keyboard-shortcuts --property '/commands/default/<Super>e'
-    xfconf-query --reset --channel xfce4-keyboard-shortcuts --property '/commands/custom/<Super>e'
-    xfconf-query --reset --channel xfce4-keyboard-shortcuts --property '/xfwm4/custom/<Super>e'
-    xfconf-query --create --channel xfce4-keyboard-shortcuts --property '/xfwm4/custom/<Super>e' --type string --set 'tile_up_right_key'
-    

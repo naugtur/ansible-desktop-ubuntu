@@ -1,43 +1,77 @@
-- name: setup folder for node replacements
-  become: true
-  shell: "mkdir -p /usr/local/n && chown -R naugtur /usr/local/n/"
+---
+- name: Create directory for node manager
+  file:
+    path: /usr/local/n
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: "0755"
 
-- name: install n node manager
-  become: true
-  shell: "npm i -g n"
+- name: Check if npm is available
+  command: which npm
+  register: npm_check
+  failed_when: false
+  changed_when: false
 
-- name: add tweaks to .bashrc
+- name: Install n node manager globally
+  npm:
+    name: n
+    global: true
+  when: npm_check.rc == 0
+
+- name: Add environment tweaks to .bashrc
+  become: false
   become_user: "{{ user }}"
   blockinfile:
-    dest: "~/.bashrc"
+    path: "{{ ansible_env.HOME }}/.bashrc"
     block: |
-      # thefuck install
-      eval $(thefuck --alias)
+      # thefuck alias
+      if command -v thefuck > /dev/null 2>&1; then
+        eval $(thefuck --alias)
+      fi
+
       # history saving
       export PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
-      # npm global
+
+      # npm global packages
       NPM_BIN="$HOME/.npm-packages/bin"
       export PATH="$PATH:$NPM_BIN"
+
       # large history
       HISTSIZE=100000
       HISTFILESIZE=200000
-    marker: '# {mark} ANSIBLE MANAGED BLOCK - tweaks'
+
+      # n node manager path
+      export N_PREFIX="/usr/local/n"
+      export PATH="$N_PREFIX/bin:$PATH"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - tweaks"
     insertbefore: EOF
     create: false
+    backup: true
 
-
-- name: nice prompt in .bashrc
+- name: Add enhanced prompt to .bashrc
+  become: false
   become_user: "{{ user }}"
   blockinfile:
-    dest: "~/.bashrc"
+    path: "{{ ansible_env.HOME }}/.bashrc"
     block: |
-      # zzzzzzzzzzz
+      # Enhanced git-aware prompt
       if [ "$color_prompt" = yes ]; then
-          PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] \[\e[91m\]\$(__git_ps1 '[%s]')\[\e[00m\]\$ "
+          # Check if __git_ps1 function is available
+          if declare -f __git_ps1 > /dev/null; then
+              PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] \[\e[91m\]\$(__git_ps1 '[%s]')\[\e[00m\]\$ "
+          else
+              PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "
+          fi
       else
           PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
       fi
-    marker: '# {mark} ANSIBLE MANAGED BLOCK - prompt'
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - prompt"
     insertbefore: EOF
     create: false
+    backup: true
 
+- name: Ensure git-prompt script is available
+  apt:
+    name: bash-completion
+    state: present
