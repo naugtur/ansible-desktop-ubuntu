@@ -1,49 +1,30 @@
 ---
-- name: Check if scripts directory exists
-  stat:
-    path: "{{ playbook_dir }}/scripts"
-  register: scripts_dir
-  delegate_to: localhost
-  become: false
-
 - name: Copy bin scripts to user home directory
+  become: false
   copy:
-    src: "{{ playbook_dir }}/scripts/bin/"
-    dest: "{{ ansible_env.HOME }}/bin/"
-    owner: "{{ user }}"
-    group: "{{ user }}"
+    src: "{{ playbook_dir }}/scripts/bin"
+    dest: "~/"
     mode: preserve
     backup: true
-  become: false
-  when: scripts_dir.stat.exists
   tags:
     - binscripts
 
-- name: Ensure bin directory is in PATH
+- name: Ensure bin directory is executable
+  become: false
+  file:
+    path: "~/bin"
+    mode: "0755"
+    recurse: true
+  tags:
+    - binscripts
+
+- name: Add bin directory to PATH in .bashrc
+  become: false
   lineinfile:
-    path: "{{ ansible_env.HOME }}/.bashrc"
+    path: "~/.bashrc"
     line: 'export PATH="$HOME/bin:$PATH"'
     regexp: '^export PATH="\$HOME/bin:\$PATH"'
     state: present
     backup: true
-  become: false
-  when: scripts_dir.stat.exists
-  tags:
-    - binscripts
-
-- name: Make bin scripts executable
-  file:
-    path: "{{ ansible_env.HOME }}/bin"
-    mode: "0755"
-    recurse: true
-  become: false
-  when: scripts_dir.stat.exists
-  tags:
-    - binscripts
-
-- name: Warn if scripts directory doesn't exist
-  debug:
-    msg: "Scripts directory {{ playbook_dir }}/scripts not found, skipping bin scripts installation"
-  when: not scripts_dir.stat.exists
   tags:
     - binscripts

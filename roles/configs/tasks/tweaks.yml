@@ -21,11 +21,10 @@
 
 - name: Add environment tweaks to .bashrc
   become: false
-  become_user: "{{ user }}"
   blockinfile:
-    path: "{{ ansible_env.HOME }}/.bashrc"
+    path: "~/.bashrc"
     block: |
-      # thefuck alias
+      # thefuck alias (if available)
       if command -v thefuck > /dev/null 2>&1; then
         eval $(thefuck --alias)
       fi
@@ -51,9 +50,8 @@
 
 - name: Add enhanced prompt to .bashrc
   become: false
-  become_user: "{{ user }}"
   blockinfile:
-    path: "{{ ansible_env.HOME }}/.bashrc"
+    path: "~/.bashrc"
     block: |
       # Enhanced git-aware prompt
       if [ "$color_prompt" = yes ]; then
