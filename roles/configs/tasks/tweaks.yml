@@ -24,11 +24,6 @@
   blockinfile:
     path: "~/.bashrc"
     block: |
-      # thefuck alias (if available)
-      if command -v thefuck > /dev/null 2>&1; then
-        eval $(thefuck --alias)
-      fi
-
       # history saving
       export PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 
@@ -73,3 +68,11 @@
   apt:
     name: bash-completion
     state: present
+
+## Set global git configuration
+- name: Set global git configuration
+  become: false
+  shell: |
+    git config --global user.email "naugtur@gmail.com"
+    git config --global user.name "naugtur"
+    git config --global push.autosetupremote true
